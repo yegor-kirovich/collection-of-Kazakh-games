@@ -9,9 +9,9 @@ s_x, s_y = 1200, 800
 screen = pygame.display.set_mode((s_x, s_y))
 
 
-rock = Rock(screen, s_x, s_y, 400, "Skrytyy-kamen.png")
-eagle = Eagle(screen, s_x, s_y, 0, 0, "ab.png")
-player = Player(screen, s_x, s_y, 30, 600, "5261963.png")
+rock = Rock(screen, s_x, s_y, -600, "Skrytyy-kamen.png")
+eagle = Eagle(screen, s_x, s_y, -400, 0, "ab.png")
+player = Player(screen, s_x, s_y, 550, 600, "5261963.png")
 
 
 while True:

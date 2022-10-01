@@ -8,14 +8,19 @@ class Player(Object):
         self.x = x
         self.y = y
         self.jump = False
+        self.up = True
 
     def move(self):
         if self.jump:
-            self.y -= 1
-            if self.y == 500:
-                self.jump = False
-
-        print(self.jump)
+            if self.up:
+                self.y -= 0.75
+                if self.y == 300:
+                    self.up = False
+            else:
+                self.y += 0.75
+                if self.y == 600:
+                    self.up = True
+                    self.jump = False
 
     def draw(self):
         self.screen.blit(self.sprite, (self.x, self.y))
