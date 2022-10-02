@@ -7,18 +7,21 @@ class Player(Object):
         self.sprite = pygame.image.load(image)
         self.x = x
         self.y = y
+        self.spawn_y = y
+        self.jump_distance = 200    #Change
+        self.jump_speed = 1         #Change
         self.jump = False
         self.up = True
 
     def move(self):
         if self.jump:
             if self.up:
-                self.y -= 0.75
-                if self.y == 300:
+                self.y -= self.jump_speed
+                if self.y == self.spawn_y - self.jump_distance:
                     self.up = False
             else:
-                self.y += 0.75
-                if self.y == 600:
+                self.y += self.jump_speed
+                if self.y == self.spawn_y:
                     self.up = True
                     self.jump = False
 

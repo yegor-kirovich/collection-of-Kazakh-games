@@ -5,13 +5,13 @@ from Objects.Player.Player import *
 
 pygame.init()
 
-s_x, s_y = 1200, 800
+s_x, s_y = 1200, 700
 screen = pygame.display.set_mode((s_x, s_y))
 
 
-rock = Rock(screen, s_x, s_y, -600, "Skrytyy-kamen.png")
-eagle = Eagle(screen, s_x, s_y, -400, 0, "ab.png")
-player = Player(screen, s_x, s_y, 550, 600, "5261963.png")
+rock = Rock(screen, s_x, s_y, 900, "Skrytyy-kamen.png")
+eagle = Eagle(screen, s_x, s_y, 900, 0, "ab.png")
+player = Player(screen, s_x, s_y, 200, 500, "5261963.png")
 
 
 while True:

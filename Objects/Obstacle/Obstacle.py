@@ -11,11 +11,11 @@ class Obstacle(Object):
         self.time_of_disable = self.find_time_of_disable()
 
     def find_time_of_disable(self) -> int:
-        time = random.choice([i for i in range(50, 100)])
+        time = random.choice([i for i in range(50, 100)])   #Spawn rate should change to make more acceptable game speed
         return time * 60
 
     def is_disable(self) -> bool:
-        if self.x >= self.s_x:
+        if self.x <= -200:
             self.disable = False
         else:
             self.disable = True
@@ -29,7 +29,7 @@ class Obstacle(Object):
                 else:
                     self.frame += 1
             else:
-                self.disable, self.x, self.frame = True, 0, 0
+                self.disable, self.x, self.frame = True, 900, 0
                 self.time_of_disable = self.find_time_of_disable()
         else:
-            self.x += 0.8
+            self.x -= 0.8
