@@ -8,19 +8,18 @@ class Player(Object):
         self.x = x
         self.y = y
         self.spawn_y = y
-        self.jump_distance = 200    #Change
-        self.jump_speed = 1         #Change
+        self.jump_distance = 300    #Change
         self.jump = False
         self.up = True
 
     def move(self):
         if self.jump:
             if self.up:
-                self.y -= self.jump_speed
+                self.y -= 10
                 if self.y == self.spawn_y - self.jump_distance:
                     self.up = False
             else:
-                self.y += self.jump_speed
+                self.y += 15
                 if self.y == self.spawn_y:
                     self.up = True
                     self.jump = False
