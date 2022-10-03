@@ -15,7 +15,7 @@ clock = pygame.time.Clock()
 rock = Rock(screen, s_x, s_y, 1300, "Skrytyy-kamen.png")
 eagle = Eagle(screen, s_x, s_y, 1300, 0, "ab.png")
 player = Player(screen, s_x, s_y, 150, 250, "abc.png")
-soil = Soil(screen, s_x, s_y, "abcd.png")
+soil = Soil(screen, s_x, s_y, "soil.png")
 cloud = Cloud(screen, s_x, s_y, 800, 100, "3ZGvh.png")
 
 
@@ -26,22 +26,18 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.KEYDOWN and player.jump is False:
-            if event.key == pygame.K_SPACE:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and player.jump is False:
                 player.jump = True
+            if event.key == pygame.K_DOWN:
+                player.sit = True
 
     screen.fill((27, 235, 250))
 
-    rock.move()
-    eagle.move()
-    player.move()
-    soil.move()
-    cloud.move()
+    objects = [eagle, soil, rock, cloud, player]
 
-    soil.draw()
-    eagle.draw()
-    cloud.draw()
-    rock.draw()
-    player.draw()
+    for object in objects:
+        object.move()
+        object.draw()
 
     pygame.display.flip()

@@ -6,11 +6,11 @@ class Soil(Object):
         super().__init__(main_screen, screen_size_x, screen_size_y)
         self.sprite = pygame.image.load(image)
         self.x = 0
-        self.y = 558
+        self.y = 500
 
     def move(self):
         self.x -= 4
-        if self.x == -1280:
+        if self.x == -1200:
             self.x = 0
 
     def draw(self):
