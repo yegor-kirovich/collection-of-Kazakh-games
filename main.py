@@ -31,13 +31,19 @@ while True:
                 player.jump = True
             if event.key == pygame.K_DOWN:
                 player.sit = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_DOWN:
+                player.sit = False
 
     screen.fill((27, 235, 250))
 
     objects = [eagle, soil, rock, cloud, player]
 
     for object in objects:
-        object.move()
+        if object == player:
+            object.move("123.png", "abc.png")
+        else:
+            object.move()
         object.draw()
 
     pygame.display.flip()

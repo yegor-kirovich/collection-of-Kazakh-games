@@ -15,7 +15,7 @@ class Player(Object):
         self.speed = 20
         self.i = 0
 
-    def move(self):
+    def move(self, image1, image2):
         if self.jump:
             if self.up:
                 self.y -= self.speed
@@ -30,8 +30,9 @@ class Player(Object):
                     self.jump = False
             print(self.y)
         if self.sit:
-            self.i
-
+            self.sprite = pygame.image.load(image1)
+        else:
+            self.sprite = pygame.image.load(image2)
 
     def draw(self):
         self.screen.blit(self.sprite, (self.x, self.y))
