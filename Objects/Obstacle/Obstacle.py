@@ -11,7 +11,7 @@ class Obstacle(Object):
         self.time_of_disable = self.find_time_of_disable()
 
     def find_time_of_disable(self) -> int:
-        time = random.choice([i for i in range(1, 6)])   #Spawn rate should change to make more acceptable game speed
+        time = random.choice([i for i in range(1, 3)])   #Spawn rate should change to make more acceptable game speed
         return time * 120
 
     def is_disable(self) -> bool:

@@ -10,19 +10,28 @@ class Player(Object):
         self.spawn_y = y
         self.jump_distance = 300    #Change
         self.jump = False
+        self.sit = False
         self.up = True
+        self.speed = 20
+        self.i = 0
 
     def move(self):
         if self.jump:
             if self.up:
-                self.y -= 10
-                if self.y == self.spawn_y - self.jump_distance:
+                self.y -= self.speed
+                self.speed -= (2/3)
+                if self.y <= self.spawn_y - self.jump_distance:
                     self.up = False
             else:
-                self.y += 15
-                if self.y == self.spawn_y:
+                self.speed += (2/3)
+                self.y += self.speed
+                if self.y >= self.spawn_y:
                     self.up = True
                     self.jump = False
+            print(self.y)
+        if self.sit:
+            self.i
+
 
     def draw(self):
         self.screen.blit(self.sprite, (self.x, self.y))
