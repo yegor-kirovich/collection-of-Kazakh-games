@@ -22,18 +22,19 @@ cloud = Cloud(screen, s_x, s_y, 800, 100, "3ZGvh.png")
 while True:
     clock.tick(120)
 
+    keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_SPACE]:
+        player.jump = True
+    if keys[pygame.K_DOWN] and keys[pygame.K_SPACE] is False:
+        player.sit = True
+    else:
+        player.sit = False
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and player.jump is False:
-                player.jump = True
-            if event.key == pygame.K_DOWN:
-                player.sit = True
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_DOWN:
-                player.sit = False
 
     screen.fill((27, 235, 250))
 
