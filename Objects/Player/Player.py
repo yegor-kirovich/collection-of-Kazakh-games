@@ -4,7 +4,7 @@ from Objects.Object import *
 class Player(Object):
     def __init__(self, main_screen, screen_size_x, screen_size_y, x, y, image):
         super().__init__(main_screen, screen_size_x, screen_size_y)
-        self.sprite = pygame.image.load(image)
+        self.sprite = pygame.image.load(image).convert_alpha()
         self.x = x
         self.y = y
         self.spawn_y = y
@@ -28,7 +28,6 @@ class Player(Object):
                 if self.y >= self.spawn_y:
                     self.up = True
                     self.jump = False
-            print(self.y)
         if self.sit:
             self.sprite = pygame.image.load(image1)
         else:

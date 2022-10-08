@@ -11,8 +11,8 @@ from Objects.Player.Woman import *
 
 pygame.init()
 
-s_x, s_y = 1200, 700
-screen = pygame.display.set_mode((s_x, s_y))
+s_x, s_y = 1200, 700 #width and height of the screen
+screen = pygame.display.set_mode((s_x, s_y)) #setting it
 
 condition, frame = "start", 0
 
@@ -59,9 +59,9 @@ while True:
         player.draw()
         if frame <= 120:
             text1 = start_screen.render("1", True, (0, 0, 0, 0.5))
-        elif 120 <= frame <= 240:
+        elif frame <= 240:
             text1 = start_screen.render("2", True, (0, 0, 0, 0.5))
-        elif 240 <= frame <= 360:
+        elif frame <= 360:
             text1 = start_screen.render("3", True, (0, 0, 0, 0.5))
         if frame == 400:
             condition = "middle"
@@ -82,8 +82,8 @@ while True:
             else:
                 object.move()
             object.draw()
-        if frame == 120:
-            condition = "middle-final"
+        #if frame == 120:
+        #    condition = "middle-final"
     elif condition == "middle-final":
         text1 = start_screen.render("SPACE", True, (0, 0, 0, 0.5))
         screen.blit(text1, (600, 250))
