@@ -22,12 +22,13 @@ start_screen = pygame.font.Font("minecraft.ttf", 42)
 text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
 
 rock = Rock(screen, s_x, s_y, 1300, "Skrytyy-kamen.png")
-eagle = Eagle(screen, s_x, s_y, 1300, 0, "ab.png")
-player = Player(screen, s_x, s_y, 0, 250, "abc.png")
+eagle = Eagle(screen, s_x, s_y, 1300, 330, "ab.png")
+player = Player(screen, s_x, s_y, 100, 430, "abc.png")
 soil = Soil(screen, s_x, s_y, "soil.png")
 cloud = Cloud(screen, s_x, s_y, 800, 100, "3ZGvh.png")
 woman = Woman(screen, s_x, s_y, 700, 250, "kyz.png")
 
+objects = [soil, rock, cloud, player, eagle]
 
 while True:
     clock.tick(120)
@@ -43,8 +44,6 @@ while True:
                 condition = "start-middle"
 
     screen.fill((27, 235, 250))
-
-    objects = [eagle, soil, rock, cloud, player]
 
     if condition == "start":
         soil.draw()

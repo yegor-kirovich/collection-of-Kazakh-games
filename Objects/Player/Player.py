@@ -14,6 +14,7 @@ class Player(Object):
         self.up = True
         self.speed = 20
         self.i = 0
+        self.down = False
 
     def move(self, image1, image2):
         if self.jump:
@@ -30,7 +31,13 @@ class Player(Object):
                     self.jump = False
         if self.sit:
             self.sprite = pygame.image.load(image1)
+            if self.y == self.spawn_y:
+                self.y += 66
+                self.down = True
         else:
+            if self.down:
+                self.y -= 66
+                self.down = False
             self.sprite = pygame.image.load(image2)
 
     def draw(self):

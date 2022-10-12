@@ -32,4 +32,4 @@ class Obstacle(Object):
                 self.disable, self.x, self.frame = True, 1300, 0
                 self.time_of_disable = self.find_time_of_disable()
         else:
-            self.x -= 8
+            self.x -= 12

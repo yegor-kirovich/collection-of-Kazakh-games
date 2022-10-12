@@ -7,7 +7,7 @@ class Eagle(Obstacle):
         self.sprite = pygame.image.load(image).convert_alpha()
 
     def find_time_of_disable(self):
-        time = random.choice([i for i in range(100, 150)])
+        time = random.choice([i for i in range(3, 5)])
         return time * 60
 
     def draw(self):
