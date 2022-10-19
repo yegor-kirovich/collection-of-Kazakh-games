@@ -68,9 +68,18 @@ while True:
         screen.blit(text1, (600, 250))
     elif condition == "middle":
         frame += 1
+
+        #the collision
+        if player.sit:
+            #check naebnutoe telo with head snizu
+            pass
+        else:
+            #check norm telo with head sverhu
+            pass
+
         if keys[pygame.K_SPACE]:
             player.jump = True
-        if keys[pygame.K_DOWN] and keys[pygame.K_SPACE] is False:
+        if keys[pygame.K_DOWN] and player.y <= 100:
             player.sit = True
         else:
             player.sit = False
