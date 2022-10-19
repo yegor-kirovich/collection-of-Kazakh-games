@@ -15,7 +15,7 @@ class Player(Object):
         self.speed = 20
         self.i = 0
         self.down = False
-        self.rect_player = pygame.Rect(x, y, 100, 480)
+        self.rect_player = pygame.Rect(x, y, 250, 166)
 
     def move(self, image1, image2):
         if self.jump:

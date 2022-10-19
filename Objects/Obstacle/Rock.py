@@ -10,3 +10,4 @@ class Rock(Obstacle):
     def draw(self):
         if self.disable:
             self.screen.blit(self.sprite, (self.x, self.y))
+            pygame.draw.rect(self.screen, (255, 255, 255), self.rect_collision)
