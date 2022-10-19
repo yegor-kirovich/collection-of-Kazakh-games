@@ -33,3 +33,4 @@ class Obstacle(Object):
                 self.time_of_disable = self.find_time_of_disable()
         else:
             self.x -= 12
+        self.rect_collision.x = self.x

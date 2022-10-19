@@ -69,20 +69,23 @@ while True:
     elif condition == "middle":
         frame += 1
 
-        #the collision
-        if player.sit:
-            #check naebnutoe telo with head snizu
-            pass
-        else:
-            #check norm telo with head sverhu
-            pass
-
         if keys[pygame.K_SPACE]:
             player.jump = True
-        if keys[pygame.K_DOWN] and player.y <= 100:
+        if keys[pygame.K_DOWN] and player.y >= 430 and keys[pygame.K_SPACE] is False:
             player.sit = True
         else:
             player.sit = False
+
+        # the collision
+        if player.sit:
+            # check naebnutoe telo with head snizu
+            pass
+        else:
+            if player.rect_player.colliderect(rock.rect_collision) or player.rect_player.colliderect(
+                    eagle.rect_collision):
+                sys.exit()
+            # check norm telo with head sverhu
+            pass
 
         for object in objects:
             if object == player:
