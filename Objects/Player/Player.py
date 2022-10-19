@@ -34,15 +34,9 @@ class Player(Object):
                     self.jump = False
         if self.sit:
             self.sprite = pygame.image.load(image1)
-            if self.y == self.spawn_y:
-                self.y += 66
-                self.down = True
         else:
-            if self.down:
-                self.y -= 66
-                self.down = False
             self.sprite = pygame.image.load(image2)
 
     def draw(self):
         self.screen.blit(self.sprite, (self.x, self.y))
-        self.draw.Rect(self.screen, (255, 255, 255), self.rect_player)
+        pygame.draw.rect(self.screen, (255, 255, 255), self.rect_player)
