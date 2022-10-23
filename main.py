@@ -1,3 +1,4 @@
+import random
 import sys
 
 import pygame
@@ -22,13 +23,14 @@ start_screen = pygame.font.Font("minecraft.ttf", 42)
 text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
 
 rock = Rock(screen, s_x, s_y, 1300, "Skrytyy-kamen.png")
-eagle = Eagle(screen, s_x, s_y, 1300, 330, "ab.png")
+eagle = Eagle(screen, s_x, s_y, 2200, 280, "ab.png")
 player = Player(screen, s_x, s_y, 100, 370, "sprite#1.png", "abc.png", "sprite_jump.png")
 soil = Soil(screen, s_x, s_y, "soil.png")
 cloud = Cloud(screen, s_x, s_y, 800, 100, "3ZGvh.png")
 woman = Woman(screen, s_x, s_y, 700, 250, "kyz.png")
 
-objects = [soil, rock, cloud, player]
+objects, objects_obstacles = [soil, cloud, player], [rock, eagle]
+
 
 while True:
     clock.tick(120)
@@ -76,12 +78,28 @@ while True:
         else:
             player.sit = False
 
-        if player.rect_player.colliderect(rock.rect_collision) or player.rect_player.colliderect(eagle.rect_collision):
-            condition = "game over"
-
         for object in objects:
             object.move()
             object.draw()
+
+        for i in range(len(objects_obstacles)):
+            if not player.sit:
+                if player.rect_player.colliderect(objects_obstacles[i].rect_collision) or player.rect_player.colliderect( objects_obstacles[i].rect_collision):
+                    condition = "game over"
+            else:
+                pass
+
+            objects_obstacles[i].move()
+            objects_obstacles[i].draw()
+            if objects_obstacles[i].x < -50:
+                if random.randint(1, 2) == 1:
+                    objects_obstacles.append(Rock(screen, s_x, s_y, objects_obstacles[-1].x + 900, "Skrytyy-kamen.png"))
+                else:
+                    objects_obstacles.append(Eagle(screen, s_x, s_y, objects_obstacles[-1].x + 900, 280, "ab.png"))
+
+                objects_obstacles[i] = None
+                objects_obstacles.remove(objects_obstacles[i])
+
 
         #if frame == 120:
         #    condition = "middle-final"
@@ -94,6 +112,9 @@ while True:
         player.draw()
     elif condition == "game over":
         for object in objects:
+            object.draw()
+
+        for object in objects_obstacles:
             object.draw()
     else:
         text1 = start_screen.render("Victory", True, (0, 0, 0, 0.5))

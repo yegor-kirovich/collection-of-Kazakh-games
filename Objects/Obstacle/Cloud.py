@@ -7,19 +7,12 @@ class Cloud(Obstacle):
         self.sprite = pygame.image.load(image).convert_alpha()
         self.x = x
         self.y = y
+        self.initial_x = x + 600
 
     def move(self):
-        if self.is_disable() is False:
-            if self.frame != self.time_of_disable:
-                if self.frame == 0:
-                    self.frame = 2
-                else:
-                    self.frame += 2
-            else:
-                self.disable, self.x, self.frame = True, 1300, 0
-                self.time_of_disable = self.find_time_of_disable()
-        else:
-            self.x -= 2
+        self.x -= 2
+        if self.x <= -300:
+            self.x = self.initial_x
 
     def draw(self):
         self.screen.blit(self.sprite, (self.x, self.y))
