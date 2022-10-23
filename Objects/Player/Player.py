@@ -2,24 +2,24 @@ from Objects.Object import *
 
 
 class Player(Object):
-    def __init__(self, main_screen, screen_size_x, screen_size_y, x, y, image):
+    def __init__(self, main_screen, screen_size_x, screen_size_y, x, y, image_idle, image_sit, image_jump):
         super().__init__(main_screen, screen_size_x, screen_size_y)
-        self.sprite = pygame.image.load(image).convert_alpha()
-        self.x = x
-        self.y = y
-        self.spawn_y = y
+        self.sprite_idle, self.sprite_sit, self.sprite_jump = pygame.image.load(image_idle).convert_alpha(), pygame.image.load(image_sit).convert_alpha(), pygame.image.load(image_jump).convert_alpha()
+        self.sprite_idle = pygame.transform.scale(self.sprite_idle, (self.sprite_idle.get_width() / 6.66 * 3, self.sprite_idle.get_height() / 6.40 * 3))
+        self.sprite_sit = pygame.transform.scale(self.sprite_sit, (self.sprite_sit.get_width() * 3, self.sprite_sit.get_height() * 3))
+        self.sprite_jump = pygame.transform.scale(self.sprite_jump, (self.sprite_jump.get_width() / 8.32 * 3, self.sprite_jump.get_height() / 7.76 * 3))
+        self.sprite = self.sprite_idle
+        self.x, self.y = x, y
+        self.spawn_y = self.y
         self.jump_distance = 300    #Change
-        self.jump = False
-        self.sit = False
-        self.up = True
+        self.jump, self.sit, self.up = False, False, True
         self.speed = 20
-        self.i = 0
-        self.down = False
-        self.rect_player = pygame.Rect(x, y, 250, 166)
+        self.rect_player = pygame.Rect(self.x, self.y, self.sprite_idle.get_width(), self.sprite_idle.get_height())
 
-    def move(self, image1, image2):
+    def move(self):
         if self.jump:
             if self.up:
+                self.sprite = self.sprite_jump
                 self.y -= self.speed
                 self.rect_player.y = self.y
                 self.speed -= (2/3)
@@ -32,11 +32,15 @@ class Player(Object):
                 if self.y >= self.spawn_y:
                     self.up = True
                     self.jump = False
-        if self.sit:
-            self.sprite = pygame.image.load(image1)
-        else:
-            self.sprite = pygame.image.load(image2)
+        elif self.sit:
+            self.sprite = self.sprite_sit
+        elif self.sit is False:
+            self.sprite = self.sprite_idle
+        self.rect_player = pygame.Rect(self.x, self.y, self.sprite.get_width(), self.sprite.get_height())
 
     def draw(self):
-        self.screen.blit(self.sprite, (self.x, self.y))
-        pygame.draw.rect(self.screen, (255, 255, 255), self.rect_player)
+        # pygame.draw.rect(self.screen, (255, 255, 255), self.rect_player)
+        if self.sit:
+            self.screen.blit(self.sprite, (self.x, self.y + 69))
+        else:
+            self.screen.blit(self.sprite, (self.x, self.y))

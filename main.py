@@ -23,12 +23,12 @@ text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
 
 rock = Rock(screen, s_x, s_y, 1300, "Skrytyy-kamen.png")
 eagle = Eagle(screen, s_x, s_y, 1300, 330, "ab.png")
-player = Player(screen, s_x, s_y, 100, 430, "abc.png")
+player = Player(screen, s_x, s_y, 100, 370, "sprite#1.png", "abc.png", "sprite_jump.png")
 soil = Soil(screen, s_x, s_y, "soil.png")
 cloud = Cloud(screen, s_x, s_y, 800, 100, "3ZGvh.png")
 woman = Woman(screen, s_x, s_y, 700, 250, "kyz.png")
 
-objects = [soil, rock, cloud, player, eagle]
+objects = [soil, rock, cloud, player]
 
 while True:
     clock.tick(120)
@@ -71,28 +71,18 @@ while True:
 
         if keys[pygame.K_SPACE]:
             player.jump = True
-        if keys[pygame.K_DOWN] and player.y >= 430 and keys[pygame.K_SPACE] is False:
+        if keys[pygame.K_DOWN] and player.y >= player.spawn_y and keys[pygame.K_SPACE] is False:
             player.sit = True
         else:
             player.sit = False
 
-        # the collision
-        if player.sit:
-            # check naebnutoe telo with head snizu
-            pass
-        else:
-            if player.rect_player.colliderect(rock.rect_collision) or player.rect_player.colliderect(
-                    eagle.rect_collision):
-                sys.exit()
-            # check norm telo with head sverhu
-            pass
+        if player.rect_player.colliderect(rock.rect_collision) or player.rect_player.colliderect(eagle.rect_collision):
+            condition = "game over"
 
         for object in objects:
-            if object == player:
-                object.move("123.png", "abc.png")
-            else:
-                object.move()
+            object.move()
             object.draw()
+
         #if frame == 120:
         #    condition = "middle-final"
     elif condition == "middle-final":
@@ -102,6 +92,9 @@ while True:
         woman.draw()
         woman.last_move()
         player.draw()
+    elif condition == "game over":
+        for object in objects:
+            object.draw()
     else:
         text1 = start_screen.render("Victory", True, (0, 0, 0, 0.5))
         screen.blit(text1, (600, 250))
