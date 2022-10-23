@@ -82,16 +82,16 @@ while True:
             object.move()
             object.draw()
 
-        for i in range(len(objects_obstacles)):
+        for i, object in zip(range(len(objects_obstacles)), objects_obstacles):
             if not player.sit:
-                if player.rect_player.colliderect(objects_obstacles[i].rect_collision) or player.rect_player.colliderect( objects_obstacles[i].rect_collision):
+                if player.rect_player.colliderect(object.rect_collision) or player.rect_player.colliderect(object.rect_collision):
                     condition = "game over"
             else:
                 pass
 
-            objects_obstacles[i].move()
-            objects_obstacles[i].draw()
-            if objects_obstacles[i].x < -50:
+            object.move()
+            object.draw()
+            if object.x < -50:
                 if random.randint(1, 2) == 1:
                     objects_obstacles.append(Rock(screen, s_x, s_y, objects_obstacles[-1].x + 900, "Skrytyy-kamen.png"))
                 else:
