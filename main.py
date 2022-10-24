@@ -89,7 +89,7 @@ while True:
 
         for i, object in zip(range(len(objects_obstacles)), objects_obstacles):
             if not player.sit:
-                if player.rect_player.colliderect(object.rect_collision) or player.rect_player.colliderect(object.rect_collision):
+                if player.rect_player.colliderect(object.rect_collision):
                     condition = "game over"
             else:
                 pass
@@ -105,19 +105,22 @@ while True:
                 objects_obstacles[i] = None
                 objects_obstacles.remove(objects_obstacles[i])
 
-        if frame == 120 * 15:
+        if frame >= 120 * 15 and not player.jump:
             condition = "final"
     elif condition == "final":
-        player.jump = False
-        player.sit = False
-        player.y = player.spawn_y
+        player.default()
+
         text1 = start_screen.render("SPACE", True, (0, 0, 0))
         screen.blit(start_screen.render("SPACE", True, (0, 0, 0)), (600, 250))
+
         space_true += 1
+
         if space_true <= 30:
             woman.last_move(speed)
+
         if player.rect_player.colliderect(woman.rect_collision):
             condition = "victory"
+
         soil.draw()
         woman.draw()
         player.draw()

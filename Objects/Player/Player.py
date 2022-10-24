@@ -36,7 +36,7 @@ class Player(Object):
             self.sprite = self.sprite_sit
         elif self.sit is False:
             self.sprite = self.sprite_idle
-        self.rect_player = pygame.Rect(self.x, self.y, self.sprite.get_width(), self.sprite.get_height())
+        self.rect_player = pygame.Rect(self.x, self.y, self.sprite.get_width() * 0.8, self.sprite.get_height() * 0.8)
 
     def draw(self):
         # pygame.draw.rect(self.screen, (255, 255, 255), self.rect_player)
@@ -44,3 +44,7 @@ class Player(Object):
             self.screen.blit(self.sprite, (self.x, self.y + 69))
         else:
             self.screen.blit(self.sprite, (self.x, self.y))
+
+    def default(self):
+        self.sit = False
+        self.sprite = self.sprite_idle

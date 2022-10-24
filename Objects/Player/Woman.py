@@ -10,7 +10,7 @@ class Woman(Object):
         self.y = pos_y
         self.start = True
         self.frame = 0
-        self.rect_collision = pygame.Rect(self.x, self.y, self.sprite.get_width(), self.sprite.get_height())
+        self.rect_collision = pygame.Rect(self.x, self.y, self.sprite.get_width() * 0.8, self.sprite.get_height() * 0.8)
 
     def start_move(self):
         self.rect_collision.x = self.x
