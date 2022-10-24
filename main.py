@@ -16,6 +16,7 @@ s_x, s_y = 1200, 700 #width and height of the screen
 screen = pygame.display.set_mode((s_x, s_y)) #setting it
 
 condition, frame = "start", 0
+speed, space_true = 0, 0
 
 clock = pygame.time.Clock()
 
@@ -27,7 +28,7 @@ eagle = Eagle(screen, s_x, s_y, 2200, 280, "ab.png")
 player = Player(screen, s_x, s_y, 100, 370, "sprite#1.png", "abc.png", "sprite_jump.png")
 soil = Soil(screen, s_x, s_y, "soil.png")
 cloud = Cloud(screen, s_x, s_y, 800, 100, "3ZGvh.png")
-woman = Woman(screen, s_x, s_y, 700, 250, "kyz.png")
+woman = Woman(screen, s_x, s_y, 900, 370, "kyz1.png")
 
 objects, objects_obstacles = [soil, cloud, player], [rock, eagle]
 
@@ -44,6 +45,9 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN and condition == "start":
                 condition = "start-middle"
+            if event.key == pygame.K_SPACE and condition == "final":
+                speed += 0.25
+                space_true = 0
 
     screen.fill((27, 235, 250))
 
@@ -51,6 +55,7 @@ while True:
         soil.draw()
         woman.draw()
         player.draw()
+        text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
         screen.blit(text1, (350, 250))
     elif condition == "start-middle":
         frame += 1
@@ -100,15 +105,21 @@ while True:
                 objects_obstacles[i] = None
                 objects_obstacles.remove(objects_obstacles[i])
 
-
-        #if frame == 120:
-        #    condition = "middle-final"
-    elif condition == "middle-final":
-        text1 = start_screen.render("SPACE", True, (0, 0, 0, 0.5))
-        screen.blit(text1, (600, 250))
+        if frame == 120 * 15:
+            condition = "final"
+    elif condition == "final":
+        player.jump = False
+        player.sit = False
+        player.y = player.spawn_y
+        text1 = start_screen.render("SPACE", True, (0, 0, 0))
+        screen.blit(start_screen.render("SPACE", True, (0, 0, 0)), (600, 250))
+        space_true += 1
+        if space_true <= 30:
+            woman.last_move(speed)
+        if player.rect_player.colliderect(woman.rect_collision):
+            condition = "victory"
         soil.draw()
         woman.draw()
-        woman.last_move()
         player.draw()
     elif condition == "game over":
         for object in objects:
