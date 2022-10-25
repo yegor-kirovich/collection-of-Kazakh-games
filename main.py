@@ -14,6 +14,7 @@ pygame.init()
 
 s_x, s_y = 1200, 700  # width and height of the screen
 screen = pygame.display.set_mode((s_x, s_y))  # setting it
+pygame.display.set_caption("Kyz Kyy")
 
 condition, frame = "start", 0
 space_true = 0
@@ -23,11 +24,13 @@ clock = pygame.time.Clock()
 start_screen = pygame.font.Font("minecraft.ttf", 42)
 text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
 
-player = Player(pygame.image.load("sprite#1.png").convert(), pygame.image.load("sprite#1 (bent).png").convert(), pygame.image.load("sprite_jump.png").convert())
-soil = Soil(0, pygame.image.load("soil.png").convert())
-soil_1 = Soil(1200, pygame.image.load("soil.png").convert())
-cloud = Cloud(random.randint(0, 1201), 100, pygame.image.load("3ZGvh.png").convert())
-woman = Woman(pygame.image.load("sprite2.png").convert())
+player = Player(pygame.image.load("Sprites/Player/player_idle.png").convert_alpha(), pygame.image.load(
+    "Sprites/Player/player_crouch.png").convert_alpha(), pygame.image.load(
+    "Sprites/Player/player_jump.png").convert_alpha())
+soil = Soil(0, pygame.image.load("Sprites/Background/soil.png").convert_alpha(), screen)
+soil_1 = Soil(1200, pygame.image.load("Sprites/Background/soil.png").convert_alpha(), screen)
+cloud = Cloud(random.randint(0, 1201), 100, pygame.image.load("Sprites/Background/cloud.png").convert_alpha())
+woman = Woman(pygame.image.load("Sprites/MainGoal)/woman_idle.png").convert_alpha())
 
 players_group = pygame.sprite.Group()
 players_group.add(player)
@@ -42,14 +45,16 @@ background_group.add(soil, soil_1)
 def fill():
     if not obstacles_group:
         if random.randint(1, 2) == 1:
-            obstacles_group.add(Rock(1300, pygame.image.load("Skrytyy-kamen.png").convert()))
+            obstacles_group.add(Rock(1300, pygame.image.load("Sprites/Obstacle/stones.png").convert_alpha()))
         else:
-            obstacles_group.add(Eagle(1300, pygame.image.load("ab.png")))
+            obstacles_group.add(Eagle(1300, pygame.image.load("Sprites/Obstacle/eagle.png").convert_alpha()))
     else:
         if random.randint(1, 2) == 1:
-            obstacles_group.add(Rock(obstacles_group.sprites()[-1].rect.x + 900, pygame.image.load("Skrytyy-kamen.png").convert()))
+            obstacles_group.add(Rock(obstacles_group.sprites()[-1].rect.x + 900, pygame.image.load(
+                "Sprites/Obstacle/stones.png").convert_alpha()))
         else:
-            obstacles_group.add(Eagle(obstacles_group.sprites()[-1].rect.x + 900, pygame.image.load("ab.png")))
+            obstacles_group.add(Eagle(obstacles_group.sprites()[-1].rect.x + 900, pygame.image.load(
+                "Sprites/Obstacle/eagle.png").convert_alpha()))
 
 
 obstacles_group = pygame.sprite.Group()
@@ -166,5 +171,5 @@ while True:
             [fill() for i in range(2)]
     else:
         text1 = start_screen.render("Victory", True, (0, 0, 0, 0.5))
-        screen.blit(text1, (600, 250))
+        screen.blit(text1, (520, 250))
     pygame.display.flip()

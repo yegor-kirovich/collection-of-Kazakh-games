@@ -6,7 +6,7 @@ class Woman(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(image, (image.get_width() * 3, image.get_height() * 3))
         self.rect = self.image.get_rect()
-        self.rect.x, self.rect.y = 900, 425
+        self.rect.x, self.rect.y = 900, 388
         self.start = True
         self.final = False
         self.frame = 0

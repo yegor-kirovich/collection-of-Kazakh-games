@@ -7,7 +7,7 @@ class Eagle(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
-        self.rect.y = 280
+        self.rect.y = 220
 
     def update(self):
         self.rect.x -= 12

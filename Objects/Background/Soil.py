@@ -7,7 +7,8 @@ class Soil(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = 589
+        self.rect.y = 525
+        self.screen = main_screen
 
     def update(self):
         self.rect.x -= 4
