@@ -1,17 +1,15 @@
-from Objects.Obstacle.Obstacle import *
+import pygame
 
 
-class Cloud(Obstacle):
-    def __init__(self, main_screen, screen_size_x, screen_size_y, x, y, image):
-        super().__init__(main_screen, screen_size_x, screen_size_y, x, y)
-        self.sprite = pygame.image.load(image).convert_alpha()
-        self.x = x
-        self.y = y
+class Cloud(pygame.sprite.Sprite):
+    def __init__(self, x, y, image):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
-    def move(self):
-        self.x -= 2
-        if self.x <= -300:
-            self.x = 1500
-
-    def draw(self):
-        self.screen.blit(self.sprite, (self.x, self.y))
+    def update(self):
+        self.rect.x -= 2
+        if self.rect.x <= -300:
+            self.rect.x = 1500

@@ -16,40 +16,47 @@ s_x, s_y = 1200, 700  # width and height of the screen
 screen = pygame.display.set_mode((s_x, s_y))  # setting it
 
 condition, frame = "start", 0
-speed, space_true = 0, 0
+space_true = 0
 
 clock = pygame.time.Clock()
 
 start_screen = pygame.font.Font("minecraft.ttf", 42)
 text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
 
-player = Player(screen, s_x, s_y, 100, 370, "sprite#1.png", "abc.png", "sprite_jump.png")
-soil = Soil(screen, s_x, s_y, "soil.png")
-cloud = Cloud(screen, s_x, s_y, random.randint(0, 1201), 100, "3ZGvh.png")
-woman = Woman(screen, s_x, s_y, 900, 370, "kyz.png")
+player = Player(pygame.image.load("sprite#1.png").convert(), pygame.image.load("sprite#1 (bent).png").convert(), pygame.image.load("sprite_jump.png").convert())
+soil = Soil(0, pygame.image.load("soil.png").convert())
+soil_1 = Soil(1200, pygame.image.load("soil.png").convert())
+cloud = Cloud(random.randint(0, 1201), 100, pygame.image.load("3ZGvh.png").convert())
+woman = Woman(pygame.image.load("sprite2.png").convert())
+
+players_group = pygame.sprite.Group()
+players_group.add(player)
+
+womans_group = pygame.sprite.Group()
+womans_group.add(woman)
+
+background_group = pygame.sprite.Group()
+background_group.add(soil, soil_1)
 
 
 def fill():
-    if not objects_obstacles:
+    if not obstacles_group:
         if random.randint(1, 2) == 1:
-            objects_obstacles.append(Rock(screen, s_x, s_y, 1500, "Skrytyy-kamen.png"))
+            obstacles_group.add(Rock(1300, pygame.image.load("Skrytyy-kamen.png").convert()))
         else:
-            objects_obstacles.append(Eagle(screen, s_x, s_y, 1500, 280, "ab.png"))
+            obstacles_group.add(Eagle(1300, pygame.image.load("ab.png")))
     else:
         if random.randint(1, 2) == 1:
-            objects_obstacles.append(Rock(screen, s_x, s_y, objects_obstacles[-1].x + 1100, "Skrytyy-kamen.png"))
+            obstacles_group.add(Rock(obstacles_group.sprites()[-1].rect.x + 900, pygame.image.load("Skrytyy-kamen.png").convert()))
         else:
-            objects_obstacles.append(Eagle(screen, s_x, s_y, objects_obstacles[-1].x + 1100, 280, "ab.png"))
+            obstacles_group.add(Eagle(obstacles_group.sprites()[-1].rect.x + 900, pygame.image.load("ab.png")))
 
 
-def delete(i):
-    objects_obstacles[i] = None
-    objects_obstacles.remove(objects_obstacles[i])
-
-
-objects, objects_obstacles = [soil, cloud, player], []
+obstacles_group = pygame.sprite.Group()
 stop_queue = False
 [fill() for i in range(2)]
+
+objects = [soil, cloud, player]
 
 while True:
     clock.tick(120)
@@ -64,21 +71,27 @@ while True:
             if event.key == pygame.K_RETURN and condition == "start":
                 condition = "start-middle"
             if event.key == pygame.K_SPACE and condition == "final":
-                speed += 0.25
+                woman.add_speed()
                 space_true = 0
 
     screen.fill((27, 235, 250))
 
     if condition == "start":
-        [object.draw() for object in objects]
-        woman.draw()
+        background_group.draw(screen)
+        players_group.draw(screen)
+        womans_group.draw(screen)
+
         text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
         screen.blit(text1, (350, 250))
     elif condition == "start-middle":
         frame += 1
-        [object.draw() for object in objects]
-        woman.start_move()
-        woman.draw()
+
+        background_group.draw(screen)
+        players_group.draw(screen)
+        womans_group.draw(screen)
+
+        womans_group.update()
+
         if frame <= 120:
             text1 = start_screen.render("1", True, (0, 0, 0, 0.5))
         elif frame <= 240:
@@ -94,34 +107,28 @@ while True:
 
         if keys[pygame.K_SPACE]:
             player.jump = True
-        if keys[pygame.K_DOWN] and player.y >= player.spawn_y and keys[pygame.K_SPACE] is False:
+        if keys[pygame.K_DOWN] and player.rect.y >= player.spawn_y and keys[pygame.K_SPACE] is False:
             player.sit = True
         else:
             player.sit = False
 
-        for object in objects:
-            object.move()
-            object.draw()
+        background_group.draw(screen)
+        players_group.draw(screen)
+        womans_group.draw(screen)
+        obstacles_group.draw(screen)
 
-        for i, obstacle in zip(range(len(objects_obstacles)), objects_obstacles):
-            if not player.sit:
-                if player.rect_player.colliderect(obstacle.rect_collision):
-                    condition = "game over"
-            else:
-                pass
-
-            obstacle.move()
-            obstacle.draw()
-            if obstacle.x < -200:
-                fill() if not stop_queue else False
-                delete(i)
+        players_group.update()
+        background_group.update()
+        womans_group.update()
+        obstacles_group.update()
+        # if not stop_queue and len(obstacles_group.sprites()) < 2:
+        #     pass
 
         if frame >= 120 * 15 and not stop_queue:
             stop_queue = True
 
         if stop_queue and not objects_obstacles and not player.jump:
             condition = "final"
-
     elif condition == "final":
         player.default()
 
@@ -131,13 +138,16 @@ while True:
         space_true += 1
 
         if space_true <= 30:
-            woman.last_move(speed)
+            woman.final = True
+            womans_group.update()
 
         if player.rect_player.colliderect(woman.rect_collision):
             condition = "victory"
 
-        [object.draw() for object in objects]
-        woman.draw()
+        background_group.draw(screen)
+        players_group.draw(screen)
+        womans_group.draw(screen)
+
     elif condition == "game over":
 
         for object in objects:
