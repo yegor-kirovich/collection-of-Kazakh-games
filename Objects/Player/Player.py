@@ -17,12 +17,13 @@ class Player(pygame.sprite.Sprite):
         self.speed = 20
 
     def default(self):
-        self.jump, self.up = False, True
+        self.jump, self.sit, self.up = False, False, True
         self.speed, self.rect.y = 20, 362
+        self.distance = 362
         self.image = self.image_idle
 
     def update(self):
-        print(self.speed)
+        print(self.speed, self.rect.y)
         if self.jump:
             if self.up:
                 self.image = self.image_jump

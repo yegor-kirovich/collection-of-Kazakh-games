@@ -117,7 +117,7 @@ while True:
 
         if keys[pygame.K_SPACE]:
             player.jump = True
-        if keys[pygame.K_DOWN] and player.rect.y >= player.spawn_y and keys[pygame.K_SPACE] is False:
+        if keys[pygame.K_DOWN] and player.rect.y >= player.spawn_y and not keys[pygame.K_SPACE]:
             player.sit = True
         else:
             player.sit = False
@@ -178,6 +178,7 @@ while True:
             player.default()
             for obstacle in obstacles_group.sprites():
                 obstacle.kill()
+            obstacles_group.sprites().clear()
             [fill() for i in range(2)]
 
             condition, frame, cloud_group.sprites()[0] = "middle", 0, random.randint(0, 1200)
