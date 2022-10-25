@@ -34,7 +34,7 @@ class Player(Object):
                     self.jump = False
         elif self.sit:
             self.sprite = self.sprite_sit
-        elif self.sit is False:
+        elif not self.sit:
             self.sprite = self.sprite_idle
         self.rect_player = pygame.Rect(self.x, self.y, self.sprite.get_width() * 0.8, self.sprite.get_height() * 0.8)
 
@@ -46,5 +46,6 @@ class Player(Object):
             self.screen.blit(self.sprite, (self.x, self.y))
 
     def default(self):
-        self.sit = False
+        self.sit, self.jump, self.up = False, False, True
+        self.speed, self.y, self.rect_player.y = 20, 370, 370
         self.sprite = self.sprite_idle

@@ -7,12 +7,11 @@ class Cloud(Obstacle):
         self.sprite = pygame.image.load(image).convert_alpha()
         self.x = x
         self.y = y
-        self.initial_x = x + 600
 
     def move(self):
         self.x -= 2
         if self.x <= -300:
-            self.x = self.initial_x
+            self.x = 1500
 
     def draw(self):
         self.screen.blit(self.sprite, (self.x, self.y))

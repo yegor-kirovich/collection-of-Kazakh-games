@@ -12,8 +12,8 @@ from Objects.Player.Woman import *
 
 pygame.init()
 
-s_x, s_y = 1200, 700 #width and height of the screen
-screen = pygame.display.set_mode((s_x, s_y)) #setting it
+s_x, s_y = 1200, 700  # width and height of the screen
+screen = pygame.display.set_mode((s_x, s_y))  # setting it
 
 condition, frame = "start", 0
 speed, space_true = 0, 0
@@ -23,14 +23,33 @@ clock = pygame.time.Clock()
 start_screen = pygame.font.Font("minecraft.ttf", 42)
 text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
 
-rock = Rock(screen, s_x, s_y, 1300, "Skrytyy-kamen.png")
-eagle = Eagle(screen, s_x, s_y, 2200, 280, "ab.png")
 player = Player(screen, s_x, s_y, 100, 370, "sprite#1.png", "abc.png", "sprite_jump.png")
 soil = Soil(screen, s_x, s_y, "soil.png")
-cloud = Cloud(screen, s_x, s_y, 800, 100, "3ZGvh.png")
-woman = Woman(screen, s_x, s_y, 900, 370, "kyz1.png")
+cloud = Cloud(screen, s_x, s_y, random.randint(0, 1201), 100, "3ZGvh.png")
+woman = Woman(screen, s_x, s_y, 900, 370, "kyz.png")
 
-objects, objects_obstacles = [soil, cloud, player], [rock, eagle]
+
+def fill():
+    if not objects_obstacles:
+        if random.randint(1, 2) == 1:
+            objects_obstacles.append(Rock(screen, s_x, s_y, 1500, "Skrytyy-kamen.png"))
+        else:
+            objects_obstacles.append(Eagle(screen, s_x, s_y, 1500, 280, "ab.png"))
+    else:
+        if random.randint(1, 2) == 1:
+            objects_obstacles.append(Rock(screen, s_x, s_y, objects_obstacles[-1].x + 1100, "Skrytyy-kamen.png"))
+        else:
+            objects_obstacles.append(Eagle(screen, s_x, s_y, objects_obstacles[-1].x + 1100, 280, "ab.png"))
+
+
+def delete(i):
+    objects_obstacles[i] = None
+    objects_obstacles.remove(objects_obstacles[i])
+
+
+objects, objects_obstacles = [soil, cloud, player], []
+stop_queue = False
+[fill() for i in range(2)]
 
 
 while True:
@@ -52,17 +71,15 @@ while True:
     screen.fill((27, 235, 250))
 
     if condition == "start":
-        soil.draw()
+        [object.draw() for object in objects]
         woman.draw()
-        player.draw()
         text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
         screen.blit(text1, (350, 250))
     elif condition == "start-middle":
         frame += 1
+        [object.draw() for object in objects]
         woman.start_move()
-        soil.draw()
         woman.draw()
-        player.draw()
         if frame <= 120:
             text1 = start_screen.render("1", True, (0, 0, 0, 0.5))
         elif frame <= 240:
@@ -87,26 +104,26 @@ while True:
             object.move()
             object.draw()
 
-        for i, object in zip(range(len(objects_obstacles)), objects_obstacles):
+        for i, obstacle in zip(range(len(objects_obstacles)), objects_obstacles):
             if not player.sit:
-                if player.rect_player.colliderect(object.rect_collision):
+                if player.rect_player.colliderect(obstacle.rect_collision):
                     condition = "game over"
             else:
                 pass
 
-            object.move()
-            object.draw()
-            if object.x < -50:
-                if random.randint(1, 2) == 1:
-                    objects_obstacles.append(Rock(screen, s_x, s_y, objects_obstacles[-1].x + 900, "Skrytyy-kamen.png"))
-                else:
-                    objects_obstacles.append(Eagle(screen, s_x, s_y, objects_obstacles[-1].x + 900, 280, "ab.png"))
+            obstacle.move()
+            obstacle.draw()
+            if obstacle.x < -200:
+                if not stop_queue:
+                    fill()
+                delete(i)
 
-                objects_obstacles[i] = None
-                objects_obstacles.remove(objects_obstacles[i])
+        if frame >= 120 * 15 and not stop_queue:
+            stop_queue = True
 
-        if frame >= 120 * 15 and not player.jump:
+        if stop_queue and not objects_obstacles and not player.jump:
             condition = "final"
+
     elif condition == "final":
         player.default()
 
@@ -125,11 +142,21 @@ while True:
         woman.draw()
         player.draw()
     elif condition == "game over":
+
         for object in objects:
             object.draw()
 
-        for object in objects_obstacles:
+        for obstacle in objects_obstacles:
             object.draw()
+            obstacle.draw()
+
+        if keys[pygame.K_9]:
+            player.default()
+
+            condition, frame, objects[1].x = "middle", 0, random.randint(0, 1201)
+            while objects_obstacles:
+                delete(0)
+            [fill() for i in range(2)]
     else:
         text1 = start_screen.render("Victory", True, (0, 0, 0, 0.5))
         screen.blit(text1, (600, 250))
