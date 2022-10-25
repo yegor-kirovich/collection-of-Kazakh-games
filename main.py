@@ -136,9 +136,8 @@ while True:
         if player.rect_player.colliderect(woman.rect_collision):
             condition = "victory"
 
-        soil.draw()
+        [object.draw() for object in objects]
         woman.draw()
-        player.draw()
     elif condition == "game over":
 
         for object in objects:
