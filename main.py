@@ -41,6 +41,9 @@ womans_group.add(woman)
 background_group = pygame.sprite.Group()
 background_group.add(soil, soil_1)
 
+cloud_group = pygame.sprite.Group()
+cloud_group.add(cloud)
+
 
 def fill():
     if not obstacles_group:
@@ -83,6 +86,7 @@ while True:
 
     if condition == "start":
         background_group.draw(screen)
+        cloud_group.draw(screen)
         players_group.draw(screen)
         womans_group.draw(screen)
 
@@ -92,6 +96,7 @@ while True:
         frame += 1
 
         background_group.draw(screen)
+        cloud_group.draw(screen)
         players_group.draw(screen)
         womans_group.draw(screen)
 
@@ -117,23 +122,30 @@ while True:
         else:
             player.sit = False
 
+        if pygame.sprite.groupcollide(players_group, obstacles_group, False, False):
+            condition = "game over"
+            continue
+
         background_group.draw(screen)
+        cloud_group.draw(screen)
         players_group.draw(screen)
         womans_group.draw(screen)
         obstacles_group.draw(screen)
 
+        cloud_group.update()
         players_group.update()
         background_group.update()
         womans_group.update()
         obstacles_group.update()
-        # if not stop_queue and len(obstacles_group.sprites()) < 2:
-        #     pass
+        if not stop_queue and len(obstacles_group.sprites()) < 2:
+             fill()
 
         if frame >= 120 * 15 and not stop_queue:
             stop_queue = True
 
-        if stop_queue and not objects_obstacles and not player.jump:
+        if stop_queue and len(obstacles_group.sprites()) == 0 and not player.jump:
             condition = "final"
+
     elif condition == "final":
         player.default()
 
@@ -146,29 +158,29 @@ while True:
             woman.final = True
             womans_group.update()
 
-        if player.rect_player.colliderect(woman.rect_collision):
+        if pygame.sprite.groupcollide(players_group, womans_group, False, False):
             condition = "victory"
 
         background_group.draw(screen)
+        cloud_group.draw(screen)
         players_group.draw(screen)
         womans_group.draw(screen)
 
     elif condition == "game over":
 
-        for object in objects:
-            object.draw()
-
-        for obstacle in objects_obstacles:
-            object.draw()
-            obstacle.draw()
+        background_group.draw(screen)
+        cloud_group.draw(screen)
+        players_group.draw(screen)
+        womans_group.draw(screen)
+        obstacles_group.draw(screen)
 
         if keys[pygame.K_9]:
             player.default()
-
-            condition, frame, objects[1].x = "middle", 0, random.randint(0, 1201)
-            while objects_obstacles:
-                delete(0)
+            for obstacle in obstacles_group.sprites():
+                obstacle.kill()
             [fill() for i in range(2)]
+
+            condition, frame, cloud_group.sprites()[0] = "middle", 0, random.randint(0, 1200)
     else:
         text1 = start_screen.render("Victory", True, (0, 0, 0, 0.5))
         screen.blit(text1, (520, 250))
