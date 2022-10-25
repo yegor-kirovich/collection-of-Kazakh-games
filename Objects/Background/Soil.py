@@ -13,9 +13,9 @@ class Soil(Object):
     def move(self):
         self.x -= 4
         self.x_end -= 4
-        if self.x < self.x_end and self.x <= -self.sprite.get_width():
+        if self.x <= -self.sprite.get_width():
             self.x = self.x_end + self.sprite.get_width()
-        elif self.x_end < self.x and self.x_end <= -self.sprite.get_width():
+        elif self.x_end <= -self.sprite.get_width():
             self.x_end = self.x + self.sprite.get_width()
 
     def draw(self):

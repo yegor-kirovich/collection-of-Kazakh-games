@@ -51,7 +51,6 @@ objects, objects_obstacles = [soil, cloud, player], []
 stop_queue = False
 [fill() for i in range(2)]
 
-
 while True:
     clock.tick(120)
 
@@ -114,8 +113,7 @@ while True:
             obstacle.move()
             obstacle.draw()
             if obstacle.x < -200:
-                if not stop_queue:
-                    fill()
+                fill() if not stop_queue else False
                 delete(i)
 
         if frame >= 120 * 15 and not stop_queue:
