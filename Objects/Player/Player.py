@@ -23,7 +23,6 @@ class Player(pygame.sprite.Sprite):
         self.image = self.image_idle
 
     def update(self):
-        print(self.speed, self.rect.y)
         if self.jump:
             if self.up:
                 self.image = self.image_jump

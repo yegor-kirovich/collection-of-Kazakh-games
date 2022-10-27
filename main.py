@@ -9,6 +9,7 @@ from Objects.Player.Player import *
 from Objects.Background.Soil import *
 from Objects.Obstacle.Cloud import *
 from Objects.Player.Woman import *
+from Objects.Background.Progress_bar import *
 
 pygame.init()
 
@@ -31,6 +32,7 @@ soil = Soil(0, pygame.image.load("Sprites/Background/soil.png").convert_alpha(),
 soil_1 = Soil(1200, pygame.image.load("Sprites/Background/soil.png").convert_alpha(), screen)
 cloud = Cloud(random.randint(0, 1201), 100, pygame.image.load("Sprites/Background/cloud.png").convert_alpha())
 woman = Woman(pygame.image.load("Sprites/MainGoal)/woman_idle.png").convert_alpha())
+progress_bar = Progress_bar(350, 30)
 
 players_group = pygame.sprite.Group()
 players_group.add(player)
@@ -90,7 +92,7 @@ while True:
         players_group.draw(screen)
         womans_group.draw(screen)
 
-        text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
+        text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0))
         screen.blit(text1, (350, 250))
     elif condition == "start-middle":
         frame += 1
@@ -126,19 +128,21 @@ while True:
             condition = "game over"
             continue
 
+        progress_bar.draw(screen)
         background_group.draw(screen)
         cloud_group.draw(screen)
         players_group.draw(screen)
         womans_group.draw(screen)
         obstacles_group.draw(screen)
 
+        progress_bar.update()
         cloud_group.update()
         players_group.update()
         background_group.update()
         womans_group.update()
         obstacles_group.update()
         if not stop_queue and len(obstacles_group.sprites()) < 2:
-             fill()
+            fill()
 
         if frame >= 120 * 15 and not stop_queue:
             stop_queue = True
