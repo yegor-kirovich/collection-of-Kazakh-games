@@ -177,6 +177,7 @@ while True:
         players_group.draw(screen)
         womans_group.draw(screen)
         obstacles_group.draw(screen)
+        progress_bar.draw(screen)
 
         if keys[pygame.K_9]:
             player.default()
@@ -184,6 +185,9 @@ while True:
                 obstacle.kill()
             obstacles_group.sprites().clear()
             [fill() for i in range(2)]
+
+            #progress bar
+            progress_bar.default()
 
             condition, frame, cloud_group.sprites()[0] = "middle", 0, random.randint(0, 1200)
     else:
