@@ -2,11 +2,17 @@ import pygame
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, image_idle, image_sit, image_jump):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image_idle = pygame.transform.scale(image_idle, (image_idle.get_width() * 3, image_idle.get_height() * 3))
-        self.image_sit = pygame.transform.scale(image_sit, (image_sit.get_width() * 3, image_sit.get_height() * 3))
-        self.image_jump = pygame.transform.scale(image_jump, (image_jump.get_width() * 3, image_jump.get_height() * 3))
+        self.image_idle = pygame.image.load("Sprites/Player/player_idle.png").convert_alpha()
+        self.image_idle = pygame.transform.scale(self.image_idle, (self.image_idle.get_width() * 3, self.image_idle.get_height() * 3))
+
+        self.image_sit = pygame.image.load("Sprites/Player/player_crouch.png").convert_alpha()
+        self.image_sit = pygame.transform.scale(self.image_sit, (self.image_sit.get_width() * 3, self.image_sit.get_height() * 3))
+
+        self.image_jump = pygame.image.load("Sprites/Player/player_jump.png").convert_alpha()
+        self.image_jump = pygame.transform.scale(self.image_jump, (self.image_jump.get_width() * 3, self.image_jump.get_height() * 3))
+
         self.image = self.image_idle
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = 100, 362

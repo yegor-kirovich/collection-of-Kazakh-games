@@ -25,13 +25,11 @@ clock = pygame.time.Clock()
 start_screen = pygame.font.Font("minecraft.ttf", 42)
 text1 = start_screen.render("Press ENTER to start", True, (0, 0, 0, 0.5))
 
-player = Player(pygame.image.load("Sprites/Player/player_idle.png").convert_alpha(), pygame.image.load(
-    "Sprites/Player/player_crouch.png").convert_alpha(), pygame.image.load(
-    "Sprites/Player/player_jump.png").convert_alpha())
-soil = Soil(0, pygame.image.load("Sprites/Background/soil.png").convert_alpha(), screen)
-soil_1 = Soil(1200, pygame.image.load("Sprites/Background/soil.png").convert_alpha(), screen)
-cloud = Cloud(random.randint(0, 1201), 100, pygame.image.load("Sprites/Background/cloud.png").convert_alpha())
-woman = Woman(pygame.image.load("Sprites/MainGoal)/woman_idle.png").convert_alpha())
+player = Player()
+soil = Soil(0, screen)
+soil_1 = Soil(1200, screen)
+cloud = Cloud(random.randint(0, 1201), 100)
+woman = Woman()
 progress_bar = Progress_bar(350, 30)
 
 players_group = pygame.sprite.Group()
@@ -50,16 +48,14 @@ cloud_group.add(cloud)
 def fill():
     if not obstacles_group:
         if random.randint(1, 2) == 1:
-            obstacles_group.add(Rock(1300, pygame.image.load("Sprites/Obstacle/stones.png").convert_alpha()))
+            obstacles_group.add(Rock(1300))
         else:
-            obstacles_group.add(Eagle(1300, pygame.image.load("Sprites/Obstacle/eagle.png").convert_alpha()))
+            obstacles_group.add(Eagle(1300))
     else:
         if random.randint(1, 2) == 1:
-            obstacles_group.add(Rock(obstacles_group.sprites()[-1].rect.x + 900, pygame.image.load(
-                "Sprites/Obstacle/stones.png").convert_alpha()))
+            obstacles_group.add(Rock(obstacles_group.sprites()[-1].rect.x + 900))
         else:
-            obstacles_group.add(Eagle(obstacles_group.sprites()[-1].rect.x + 900, pygame.image.load(
-                "Sprites/Obstacle/eagle.png").convert_alpha()))
+            obstacles_group.add(Eagle(obstacles_group.sprites()[-1].rect.x + 900))
 
 
 obstacles_group = pygame.sprite.Group()

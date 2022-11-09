@@ -2,9 +2,9 @@ import pygame
 
 
 class Soil(pygame.sprite.Sprite):
-    def __init__(self, x, image, main_screen):
+    def __init__(self, x, main_screen):
         pygame.sprite.Sprite.__init__(self)
-        self.image = image
+        self.image = pygame.image.load("Sprites/Background/soil.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = 525
