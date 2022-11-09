@@ -3,6 +3,11 @@ import sys
 
 import pygame
 
+#def collided(sprite, other):
+#    return sprite.hitbox.colliderect(other.hitbox)
+#
+#collided_sprites = pygame.sprite.spritecollide(sprite, group, dokill, collided)
+
 from Objects.Obstacle.Rock import *
 from Objects.Obstacle.Eagles import *
 from Objects.Player.Player import *

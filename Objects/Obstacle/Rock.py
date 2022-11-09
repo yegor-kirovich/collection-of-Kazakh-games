@@ -7,6 +7,7 @@ class Rock(pygame.sprite.Sprite):
         self.image = pygame.image.load("Sprites/Obstacle/stones.png").convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * 4, self.image.get_height() * 4))
         self.rect = self.image.get_rect()
+        self.rect = self.rect.inflate(-50,-10)
         self.rect.x, self.rect.y = pos_x, 500
 
     def update(self):
