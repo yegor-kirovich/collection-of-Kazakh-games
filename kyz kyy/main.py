@@ -150,7 +150,6 @@ while True:
 
         if stop_queue and len(obstacles_group.sprites()) == 0 and not player.jump:
             condition = "final"
-
     elif condition == "final":
         player.default()
 
@@ -170,7 +169,6 @@ while True:
         cloud_group.draw(screen)
         players_group.draw(screen)
         womans_group.draw(screen)
-
     elif condition == "game over":
 
         background_group.draw(screen)
