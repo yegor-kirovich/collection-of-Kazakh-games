@@ -22,8 +22,8 @@ class Player(pygame.sprite.Sprite):
         self.cur = 0
         self.image = self.images[int(self.cur)]
 
-        #self.rect_body = pygame.Rect(127, 362, 75, 180)
-        #self.rect_horse = pygame.Rect(100, 442, 150, 129)
+        self.rect_body = pygame.Rect(127, 362, 60, 100)
+        self.rect_horse = pygame.Rect(100, 442, 150, 100)
 
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = 100, 362
@@ -65,8 +65,8 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y -= 36
             self.image = self.images[int(self.cur)]
 
-        #self.rect_body.y = self.rect.y
-        #self.rect_horse.y = self.rect.y
+        self.rect_body.y = self.rect.y
+        self.rect_horse.y = self.rect.y + 80
 
         self.cur += 0.06
         if self.cur >= len(self.images):

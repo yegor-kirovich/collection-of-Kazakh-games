@@ -63,6 +63,14 @@ def fill():
             obstacles_group.add(Eagle(obstacles_group.sprites()[-1].rect.x + 900))
 
 
+def collided1(sprite, other):
+    return sprite.rect_horse.colliderect(other.rect)
+
+
+def collided2(sprite, other):
+    return sprite.rect_body.colliderect(other.rect)
+
+
 obstacles_group = pygame.sprite.Group()
 stop_queue = False
 [fill() for i in range(2)]
@@ -125,7 +133,11 @@ while True:
         else:
             player.sit = False
 
-        if pygame.sprite.groupcollide(players_group, obstacles_group, False, False):
+        if pygame.sprite.spritecollideany(player, obstacles_group, collided1):
+            condition = "game over"
+            continue
+
+        if pygame.sprite.spritecollideany(player, obstacles_group, collided2):
             condition = "game over"
             continue
 

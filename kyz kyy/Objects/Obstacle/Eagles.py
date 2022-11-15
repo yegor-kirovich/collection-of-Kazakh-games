@@ -16,7 +16,7 @@ class Eagle(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
 
-        self.ys = [320, 450, 200]
+        self.ys = [340, 450, 200]
         self.rect.y = self.ys[random.randint(0, 2)]
 
     def update(self):
