@@ -1,10 +1,11 @@
 import pygame
-
+import math
 
 class Button(pygame.sprite.Sprite):
     def __init__(self, x, num):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(f"Sprites/button_{num}.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, 0
         self.speed = 2
